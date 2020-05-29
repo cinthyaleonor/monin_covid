@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue May 19 23:26:40 2020
+Created on Fri May 29 14:53:18 2020
 
-@author: Monin
+@author: Monin - Cinthya Vergara
+
 """
-"""
+
+
 import streamlit as st
 import pandas as pd
 import pandas as pd
@@ -45,7 +47,6 @@ colors = dict(zip(
 group_lk = df_region.set_index('region')['zona'].to_dict()
 
 #Create a function to generates de evolution 
-
 fig, ax = plt.subplots(figsize=(15, 8))
 
 def draw_barchart(current_day):
@@ -75,10 +76,9 @@ def draw_barchart(current_day):
 
 # Create a simple app 
 ultimodia = df_region.ndia.max()
-st.title("Evolucion del Covid19 en Chile por region")
-st.markdown("Chile 2020 luego de %i" % ultimodia)
+st.title("Evolucion del Covid19 en Chile por región")
+day = st.slider("Selecciones día", 1, ultimodia)
+st.markdown("Chile 2020 luego de %i días desde el primer caso" % day)
 
-@st.cache(persist=True)
-fig, ax = plt.subplots(figsize=(15, 8))
-animator = animation.FuncAnimation(fig, draw_barchart, frames= range(1,ultimodia))
-st.write(HTML(animator.to_jshtml()))
+plot = st.pyplot(draw_barchart(day))
+
